@@ -45,6 +45,7 @@ namespace MyCantacts
         bool ValidateInputs()
         {
 
+            bool isValid = true;
 
             if (txtName.Text == "")
             {
@@ -79,11 +80,12 @@ namespace MyCantacts
             
             
             
-            return true;
+            return isValid;
         }
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
+
             if (ValidateInputs())
             {
                 bool isSuccess;

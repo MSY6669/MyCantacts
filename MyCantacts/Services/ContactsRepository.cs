@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using System.Data.SqlClient;
+using System.ComponentModel.Design;
 
 namespace MyCantacts.Services
 {
@@ -21,7 +23,7 @@ namespace MyCantacts.Services
             SqlConnection connection =new SqlConnection(connectionString);
             try
             {
-                string query = "Delete From MyContacts where ContactID=@ID";
+                string query = "Delete MyCantacts where ContactID=@ID";
                 SqlCommand command=new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@ID",contactID);
                 connection .Open();
@@ -45,7 +47,7 @@ namespace MyCantacts.Services
             SqlConnection connection = new SqlConnection(connectionString);
             try
             {
-                string query = "Insert Into MyContacts (Name,Family,Email,Age,Mobile,Address) values (@Name,@Family,@Email,@Age,@Mobile,@Address)";
+                string query = "Insert into MyCantacts (Name,Family,Email,Age,Mobile,Address) values (@Name,@Family,@Email,@Age,@Mobile,@Address)";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@Name", name);
                 command.Parameters.AddWithValue("@Family", family);
@@ -90,7 +92,7 @@ namespace MyCantacts.Services
 
         public DataTable SelectRow(int contactId)
         {
-            string query = "Select * From MyCantacts where contactID="+contactId;
+            string query = "Select * From MyCantacts where contactID=" + contactId;
             SqlConnection connection = new SqlConnection(connectionString);
             SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
             DataTable data = new DataTable();
@@ -103,8 +105,9 @@ namespace MyCantacts.Services
             SqlConnection connection = new SqlConnection(connectionString);
             try
             {
-                string query = "Update MyContacts (Name,Family,Email,Age,Mobile,Address) values (@Name,@Family,@Email,@Age,@Mobile,@Address)";
+                string query = "Update MyCantacts Set Name=@Name,Family=@Family,Mobile=@Mobile,Email=@Email,Age=@Age,Address=@Address Where ContactID=@ID";
                 SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@ID", contactID);
                 command.Parameters.AddWithValue("@Name", name);
                 command.Parameters.AddWithValue("@Family", family);
                 command.Parameters.AddWithValue("@Email", email);
